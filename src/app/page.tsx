@@ -1,105 +1,72 @@
-'use client'
-import Razorpay from 'razorpay';
-import React, { useState } from 'react';
-
-function ProductForm() {
-
-  const makePayment = ()=>{
-    // "use server";
-    const instance = new Razorpay({ key_id: process.env.key_id!, key_secret: process.env.key_secret! });
-    instance.orders.create({
-    amount: 50000,
-    currency: "INR",
-    receipt: "receipt#1",
-    notes: {
-        key1: "value3",
-        key2: "value2"
-    }
-  });
+'use client';
+import { ModeToggle } from '@/components/modeToggle'
+import { Button } from '@/components/ui/button';
+import Pay from '@/lib/serverActions';
+import { config } from '@/app/config/config';
+import React from 'react'
 
 
-  }
+// function loadScript(src: string) {
+// 	return new Promise((resolve) => {
+// 		const script = document.createElement('script')
+// 		script.src = src
+// 		script.onload = () => {
+// 			resolve(true)
+// 		}
+// 		script.onerror = () => {
+// 			resolve(false)
+// 		}
+// 		document.body.appendChild(script)
+// 	})
+// }
 
+function Home() {
+	async function displayRazorpay() {
+		// const res = await loadScript(
+		// 	"https://checkout.razorpay.com/v1/checkout.js"
+		// );
 
+		// if (!res) {
+		// 	alert("Razorpay SDK failed to load. Are you online?");
+		// 	return;
+		// }
 
+		const response = await fetch("/api/razorpay", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+		const { data } = await response.json();
+		console.log(data);
+		Pay(data);
 
+		// const options = {
+		// 	key: config.key_id,
 
+		// 	currency: data.currency,
+		// 	amount: data.amount.toString(),
+		// 	order_id: data.id,
+		// 	name: "Charity",
+		// 	description: "Thank you for nothing. Please give us some money",
+		// 	handler: function (response: { razorpay_payment_id: any; razorpay_order_id: any; razorpay_signature: any; }) {
+		// 		alert(response.razorpay_payment_id);
+		// 		alert(response.razorpay_order_id);
+		// 		alert(response.razorpay_signature);
+		// 	}
+		// };
 
+		// const paymentObject = new (window as any).Razorpay(options);
+		// paymentObject.open();
+	}
 
-  const [name, setName] = useState('');
-  const [price, setPrice] = useState(0);
-  const [phone, setPhone] = useState('');
-  const [productId, setProductId] = useState('');
-
-  const handleSubmit = (event: { preventDefault: () => void; }) => {
-    event.preventDefault();
-    // Form submission logic here
-    console.log('Form submitted:', { name, price, phone, productId });
-    makePayment();
-
-    
-    setName('');
-    setPrice(0);
-    setPhone('');
-    setProductId('');
-  };
-
-  return (
-    <div className='m-12'>
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="name">Name:</label>
-      <div><input
-        className='border-2 border-black rounded-lg'
-        type="text"
-        id="name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        required
-      /></div>
-      
-
-      <label htmlFor="price">Price:</label>
-      <div><input
-                className='border-2 border-black rounded-lg'
-
-        type="number"
-        id="price"
-        value={price}
-        onChange={(e) => setPrice(e.target.value)}
-        required
-      /></div>
-      
-
-      <label htmlFor="phone">Phone Number:</label>
-      <div>
-        <input
-                className='border-2 border-black rounded-lg'
-
-        type="tel"
-        id="phone"
-        value={phone}
-        onChange={(e) => setPhone(e.target.value)}
-        required
-      />
-      </div>
-      
-
-      <label htmlFor="productId">Product ID:</label>
-      <div><input
-                className='border-2 border-black rounded-lg'
-
-        type="text"
-        id="productId"
-        value={productId}
-        onChange={(e) => setProductId(e.target.value)}
-        required
-      /></div>
-      
-
-      <button className='border border-black bg-blue-300 rounded-md mt-5' type="submit">Submit</button>
-    </form>
-    </div>
-  );
+	return (
+		<>
+			<div className='flex flex-row-reverse m-5'><ModeToggle /></div>
+			<div onClick={displayRazorpay} className='flex justify-center items-center'><Button>Pay for Subscription</Button></div>
+			{/* <a  onClick={displayRazorpay} className="bg-slate-600 rounded-xl p-4 cursor-pointer" >Buy Subscription</a> */}
+		</>
+	)
 }
 
-export default ProductForm;
+export default Home
