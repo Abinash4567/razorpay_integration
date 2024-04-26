@@ -1,6 +1,6 @@
 <!-- ABOUT THE PROJECT -->
 ## Glimpse
-<p align='center'> <img src="https://github.com/Abinash4567/razorpay_integration/assets/98229006/e44871a2-6946-4488-b79a-9c70edefc412" alt="logo"></p>
+<p align='center'> <img src="https://github.com/Abinash4567/razorpay_integration/assets/98229006/f6ca1a34-3ceb-4b38-ab77-0185fe906700" alt="logo"></p>
 
 ## About the Project
 Project intended to check Webhook integration of [billops](https://github.com/Abinash4567/billops) and learn Razorpay integration.
