@@ -12,15 +12,17 @@ export async function POST(req: Request, res: Response) {
 		currency,
 		receipt: "receipt-1",
 		notes: {
-			userId: 1,
-			planId: 1,
+			userId: "userAkli",
+			planId: 4,
+			name: "Abinash",
+			email: "abinash4567@gmail.com"
 		}
 	};
 
 	try {
 		const razorpay = new Razorpay({
-			key_id: "rzp_test_OTpHtNZdXPFxsp",
-			key_secret: "szjJfyPsER72kKIReEhWPxWk",
+			key_id: process.ev.Key_id,
+			key_secret: process.env.key_secret,
 		});
 
 		const response = await razorpay.orders.create(options);

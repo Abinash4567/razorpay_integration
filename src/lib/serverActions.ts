@@ -30,6 +30,7 @@ export default function Pay(data: props) {
             "color": "#011d2b"
         },
         handler: async function (response: { razorpay_payment_id: any; razorpay_order_id: any; razorpay_signature: any; }) {
+            console.log(response);
             alert(response.razorpay_payment_id);
             alert(response.razorpay_order_id);
             alert(response.razorpay_signature);
