@@ -21,8 +21,13 @@ export async function POST(req: Request, res: Response) {
 
 	try {
 		const razorpay = new Razorpay({
+<<<<<<< HEAD
 			key_id: process.ev.Key_id,
 			key_secret: process.env.key_secret,
+=======
+			key_id: config[key_id],
+			key_secret: config[key_secret],
+>>>>>>> origin
 		});
 
 		const response = await razorpay.orders.create(options);
